@@ -126,6 +126,10 @@ Route::group(['middleware' => ['auth', 'permission:Setting']], function () {
 
     Route::get('/setting-waktu', [SettingController::class, 'settingWaktu'])->name('setting-waktu');
     Route::post('/update-waktu', [SettingController::class, 'updateWaktu'])->name('update-waktu');
-    Route::post('/store-vote', [SettingController::class, 'storeVote'])->name('store-vote');
+});
+
+// Route voting untuk semua user yang login
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/vote', [SettingController::class, 'index'])->name('vote');
+    Route::post('/store-vote', [SettingController::class, 'storeVote'])->name('store-vote');
 });

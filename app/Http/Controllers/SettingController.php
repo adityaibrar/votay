@@ -17,71 +17,71 @@ use App\Models\User;
 
 class SettingController extends Controller
 {
-     public function role(Request $request)
+    public function role(Request $request)
     {
         return view('role.role');
     }
 
-     public function edit($id)
+    public function edit($id)
     {
-         $role = Role::findOrFail($id);
-    $permissions = Permission::all();
-    $rolePermissions = $role->permissions->pluck('id')->toArray();
+        $role = Role::findOrFail($id);
+        $permissions = Permission::all();
+        $rolePermissions = $role->permissions->pluck('id')->toArray();
 
-    return view('role.edit', compact('role', 'permissions', 'rolePermissions'));
+        return view('role.edit', compact('role', 'permissions', 'rolePermissions'));
     }
-    
-  public function update(Request $request, $id)
-{
-    $role = Role::findOrFail($id);
 
-    $request->validate([
-        'name' => ['required', 'min:3', 'max:30'],
-        'permissions' => ['required', 'array'],
-    ]);
-
-    $role->update([
-        'name' => $request->name,
-    ]);
-
-    $role->permissions()->sync($request->permissions);
-
-    return redirect('/role')->with('update_success', 'Role dan permissions berhasil diupdate');
-}
-
- public function create()
+    public function update(Request $request, $id)
     {
-       return view('role.add');
+        $role = Role::findOrFail($id);
+
+        $request->validate([
+            'name' => ['required', 'min:3', 'max:30'],
+            'permissions' => ['required', 'array'],
+        ]);
+
+        $role->update([
+            'name' => $request->name,
+        ]);
+
+        $role->permissions()->sync($request->permissions);
+
+        return redirect('/role')->with('update_success', 'Role dan permissions berhasil diupdate');
+    }
+
+    public function create()
+    {
+        return view('role.add');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-        'name' => ['required', 'min:3', 'max:30'],
-        'guard_name' => ['required', 'min:3', 'max:30'],
+            'name' => ['required', 'min:3', 'max:30'],
+            'guard_name' => ['required', 'min:3', 'max:30'],
         ]);
 
-     DB::beginTransaction();
-     try {
-        $role = new Role();
-        $role->name = $request->name;
-        $role->guard_name = $request->guard_name;
-       
-        $role->save();
-        DB::commit();
-     } catch (\Throwable $th) {
-        DB::rollback();
-        return redirect('/role')->with('success', 'Role gagal ditambahkan!' . $th->getMessage());
-     }
+        DB::beginTransaction();
+        try {
+            $role = new Role();
+            $role->name = $request->name;
+            $role->guard_name = $request->guard_name;
+
+            $role->save();
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect('/role')->with('success', 'Role gagal ditambahkan!' . $th->getMessage());
+        }
         return redirect('/role')->with('success', 'Role berhasil ditambahkan!');
     }
 
 
 
-   
 
 
- public function settingWaktu()
+
+    public function settingWaktu()
     {
         // Ambil semua pengaturan waktu
         $settings = SettingWaktu::all();
@@ -138,47 +138,66 @@ class SettingController extends Controller
     //vote
     public function index(Request $request)
     {
+        // Cek apakah hari ini adalah hari voting
+        $settings = SettingWaktu::first();
+        $canVote = false;
+
+        if ($settings && Carbon::now()->isSameDay(Carbon::parse($settings->waktu))) {
+            $canVote = true;
+        }
+
+        if (!$canVote) {
+            return redirect('/home')->with('error', 'Voting belum dibuka atau sudah berakhir.');
+        }
+
+        // Cek apakah user sudah voting
+        $hasVoted = HasilVoting::where('id_user', auth()->id())->exists();
+
         // Ambil semua data calon OSIS dari database
         $calonOsis = Osis::all();
-             $settings = SettingWaktu::all();
 
-            $expired = false;
-    foreach ($settings as $setting) {
-        if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
-            $expired = true;
-            break;
-        }
-    }
         // Return view dengan data calon OSIS
-        return view('vote.vote', compact('calonOsis','settings','expired'));
+        return view('vote.vote', compact('calonOsis', 'hasVoted', 'canVote'));
     }
 
 
     public function storeVote(Request $request)
-{
-    // Validasi input
-    $request->validate([
-        'id_user' => 'required',
-        'id_calon' => 'required',
-    ]);
+    {
+        // Cek apakah hari ini adalah hari voting
+        $settings = SettingWaktu::first();
+        $canVote = false;
 
-    // Cek apakah pengguna sudah melakukan voting sebelumnya
-    $existingVote = HasilVoting::where('id_user', $request->id_user)->exists();
-    if ($existingVote) {
-        return redirect('/vote')->with('already_voted', true);
+        if ($settings && Carbon::now()->isSameDay(Carbon::parse($settings->waktu))) {
+            $canVote = true;
+        }
+
+        if (!$canVote) {
+            return redirect('/home')->with('error', 'Voting belum dibuka atau sudah berakhir.');
+        }
+
+        // Validasi input
+        $request->validate([
+            'id_calon' => 'required|exists:calon_osis,id',
+        ]);
+
+        $userId = auth()->id();
+
+        // Cek apakah pengguna sudah melakukan voting sebelumnya
+        $existingVote = HasilVoting::where('id_user', $userId)->exists();
+        if ($existingVote) {
+            return redirect('/vote')->with('error', 'Anda sudah melakukan voting sebelumnya.');
+        }
+
+        // Simpan hasil voting ke dalam tabel hasil_voting
+        HasilVoting::create([
+            'id_user' => $userId,
+            'id_calon' => $request->id_calon,
+            'tanggal' => now(),
+        ]);
+
+        // Update status pemilihan pengguna jika kolom ada
+        User::where('id', $userId)->update(['status_pemilihan' => 'Sudah Memilih']);
+
+        return redirect('/vote')->with('success', 'Vote berhasil disimpan!');
     }
-
-    // Simpan hasil voting ke dalam tabel hasil_voting
-    HasilVoting::create([
-        'id_user' => $request->id_user,
-        'id_calon' => $request->id_calon,
-        'tanggal' => now(),
-    ]);
-
-    // Update status pemilihan pengguna
-    User::where('id', $request->id_user)->update(['status_pemilihan' => 'Sudah Memilih']);
-
-    return redirect('/vote')->with('vote_success', true);
-}
-
 }

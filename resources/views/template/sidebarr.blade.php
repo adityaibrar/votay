@@ -38,21 +38,28 @@ use Illuminate\Support\Facades\Log;
             </a>
            
         </li>
-            	@php
-						$settings = App\Models\SettingWaktu::first();
-						$showVote = false;
-						if($settings && \Carbon\Carbon::now()->isSameDay(\Carbon\Carbon::parse($settings->waktu))) {
-							$showVote = true;
-						}
-					@endphp
+            @endcan
+@endif
 
-					@if ($showVote)
-					<li><a href="/vote" aria-expanded="false">
-							<i class="flaticon-077-menu-1"></i>
-							<span class="nav-text">Vote</span>
-						</a>
-                    </li>
-					@endif
+{{-- Menu Vote untuk semua user yang login --}}
+@php
+    $settings = App\Models\SettingWaktu::first();
+    $showVote = false;
+    if($settings && \Carbon\Carbon::now()->isSameDay(\Carbon\Carbon::parse($settings->waktu))) {
+        $showVote = true;
+    }
+@endphp
+
+@if ($showVote)
+<li><a href="/vote" aria-expanded="false">
+        <i class="flaticon-077-menu-1"></i>
+        <span class="nav-text">Vote</span>
+    </a>
+</li>
+@endif
+
+@if(in_array('Home',$permissions))   
+    @can('Home')
             @endcan
 @endif
          @if(in_array('User',$permissions))   
@@ -66,15 +73,8 @@ use Illuminate\Support\Facades\Log;
             </li>
             @endcan
 @endif
-            @if(in_array('Data Calon OSIS',$permissions))
-                @can('Data Calon OSIS')
-                <li class="{{ request()->is('kategori*') || request()->is('add_kategori') ? 'mm-active active-no-child' : '' }}">
-                    <a href="/kategori" aria-expanded="{{ request()->is('kategori*') || request()->is('add_kategori') ? 'true' : 'false' }}" class="{{ request()->is('kategori*') || request()->is('add_kategori') ? 'mm-active' : '' }}">
-                        <i class="bi bi-grid"></i>
-                        <span class="nav-text">Kategori</span>
-                    </a>
-                </li>
-                @endcan
+ @if(in_array('Data Calon OSIS',$permissions))
+                
                  @can('Data Calon OSIS')
                 <li class="{{ request()->is('calonosis*') || request()->is('add_osis') ? 'mm-active active-no-child' : '' }}">
                     <a href="/calon-osis" aria-expanded="{{ request()->is('calonosis*') || request()->is('add_osis') ? 'true' : 'false' }}" class="{{ request()->is('calonosis*') || request()->is('add_osis') ? 'mm-active' : '' }}">

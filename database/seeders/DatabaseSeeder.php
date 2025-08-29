@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
         // Panggil seeder UsersTableSeeder
         $this->call(RolePermissionSeeder::class);
         $this->call(UsersTableSeeder::class);
-        
-      
+        $this->call(SettingWaktuSeeder::class);
     }
 }

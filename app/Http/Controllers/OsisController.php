@@ -8,63 +8,64 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\SettingWaktu;
 use Carbon\Carbon;
+
 class OsisController extends Controller
 {
     //
     public function osis(Request $request)
     {
-       
+
 
         // Ambil semua data calon OSIS dari database
         $calonOsis = Osis::all();
 
         // Return view dengan data calon OSIS
         // return view('halaman.calonosis', compact('calonOsis'));
-            $settings = SettingWaktu::all();
+        $settings = SettingWaktu::all();
 
-            $expired = false;
-    foreach ($settings as $setting) {
-        if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
-            $expired = true;
-            break;
+        $expired = false;
+        foreach ($settings as $setting) {
+            if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
+                $expired = true;
+                break;
+            }
         }
-    }
 
-    return view('osis.calonosis', compact('settings', 'expired','calonOsis'));
+        return view('osis.calonosis', compact('settings', 'expired', 'calonOsis'));
     }
     public function vote(Request $request)
     {
-       
+
 
         // Ambil semua data calon OSIS dari database
         $calonOsis = Osis::all();
 
         // Return view dengan data calon OSIS
         // return view('halaman.vote', compact('calonVote'));
-          $settings = SettingWaktu::all();
+        $settings = SettingWaktu::all();
 
-            $expired = false;
-    foreach ($settings as $setting) {
-        if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
-            $expired = true;
-            break;
+        $expired = false;
+        foreach ($settings as $setting) {
+            if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
+                $expired = true;
+                break;
+            }
         }
-    }
 
-    return view('osis.vote', compact('settings', 'expired','calonVote'));
+        return view('osis.vote', compact('settings', 'expired', 'calonVote'));
     }
     public function add_osis()
     {
         // return view('tambah.add_osis');
-          $settings = SettingWaktu::all();
+        $settings = SettingWaktu::all();
 
-            $expired = false;
-    foreach ($settings as $setting) {
-        if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
-            $expired = true;
-            break;
+        $expired = false;
+        foreach ($settings as $setting) {
+            if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
+                $expired = true;
+                break;
+            }
         }
-    }
 
         return view('osis.add_osis', compact('settings', 'expired'));
     }
@@ -76,20 +77,20 @@ class OsisController extends Controller
             'nama_calon' => 'required',
             'visi' => 'required',
             'misi' => 'required',
-            'kelas'=>'required',
-            'periode'=>'required',
-            'slogan'=>'required',
-            'NIS'=>'required',
+            'kelas' => 'required',
+            'periode' => 'required',
+            'slogan' => 'required',
+            'NIS' => 'required',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Proses penyimpanan gambar
-        $imageName = time().'.'.$request->gambar->extension();
+        $imageName = time() . '.' . $request->gambar->extension();
         $request->gambar->move(public_path('/foto_calon'), $imageName);
-        
+
 
         // Simpan data calon OSIS ke dalam database
-        Osis::create([       
+        Osis::create([
             'nama_calon' => $validatedData['nama_calon'],
             'visi' => $validatedData['visi'],
             'misi' => $validatedData['misi'],
@@ -113,20 +114,20 @@ class OsisController extends Controller
 
         // Tampilkan form edit calon OSIS
         // return view('edit.edit_osis', compact('calon'));
-          $settings = SettingWaktu::all();
+        $settings = SettingWaktu::all();
 
-            $expired = false;
-    foreach ($settings as $setting) {
-        if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
-            $expired = true;
-            break;
+        $expired = false;
+        foreach ($settings as $setting) {
+            if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
+                $expired = true;
+                break;
+            }
         }
-    }
 
-    return view('osis.edit_osis', compact('settings', 'expired','calon'));
+        return view('osis.edit_osis', compact('settings', 'expired', 'calon'));
     }
-// Metode untuk menyimpan perubahan data calon OSIS
- public function update(Request $request, $id_calon)
+    // Metode untuk menyimpan perubahan data calon OSIS
+    public function update(Request $request, $id_calon)
     {
         // Validasi data yang diterima dari form, termasuk gambar
         $validatedData = $request->validate([

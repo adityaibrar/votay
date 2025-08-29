@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('calon_osis', function (Blueprint $table) {
             $table->id(); // Primary key, auto increment
-            $table->unsignedBigInteger('id_user'); // Foreign key untuk tabel user
             $table->string('nama_calon', 35); // Nama calon
             $table->text('visimisi'); // Kolom visimisi
             $table->string('NIS', 255); // NIS
@@ -27,8 +26,6 @@ return new class extends Migration
             $table->timestamps(); // Kolom created_at dan updated_at
             $table->softDeletes(); // Kolom deleted_at untuk soft delete
 
-            // Tambahkan index atau foreign key jika diperlukan
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

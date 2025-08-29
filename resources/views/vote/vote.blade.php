@@ -147,6 +147,16 @@
             </div>
             @endif
 
+            @if($hasVoted)
+            <div class="alert alert-warning alert-dismissible fade show">
+                <i class="fas fa-check-circle mr-2"></i>
+                Anda sudah memberikan suara. Terima kasih atas partisipasinya!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span><i class="fas fa-times"></i></span>
+                </button>
+            </div>
+            @endif
+
             <div class="row">
                 @foreach($calonOsis as $calon)
                 <div class="col-lg-12 col-xl-6">
@@ -220,14 +230,19 @@
                                 </div>
                             </div>
                             <div class="modal-footer border-0">
+                                @if(!$hasVoted)
                                 <form action="{{ route('store-vote') }}" method="post" class="mr-2">
                                     @csrf
-                                    <input type="hidden" name="id_user" value="{{ auth()->user()->id }}">
                                     <input type="hidden" name="id_calon" value="{{ $calon->id }}">
-                                    <button type="submit" class="btn px-4" style="background: linear-gradient(45deg, #4CAF50, #45a049); color: white; border-radius: 25px; font-weight: 500;">
+                                    <button type="submit" class="btn px-4" style="background: linear-gradient(45deg, #4CAF50, #45a049); color: white; border-radius: 25px; font-weight: 500;" onclick="return confirm('Apakah Anda yakin ingin memilih {{ $calon->nama_calon }}? Anda tidak dapat mengubah pilihan setelah ini.')">
                                         <i class="fas fa-vote-yea mr-2"></i>Vote
                                     </button>
                                 </form>
+                                @else
+                                <button type="button" class="btn px-4" style="background: #6c757d; color: white; border-radius: 25px; font-weight: 500;" disabled>
+                                    <i class="fas fa-check mr-2"></i>Sudah Vote
+                                </button>
+                                @endif
                                 <button type="button" class="btn px-4" style="background: #e9ecef; color: #333; border-radius: 25px;" data-dismiss="modal">
                                     <i class="fas fa-times mr-2"></i>Tutup
                                 </button>
@@ -259,15 +274,16 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-           // Tampilkan alert jika berhasil voting
-    @if(session('vote_success'))
-        showVoteSuccessAlert();
-    @endif
+        // Tampilkan alert jika berhasil voting
+        @if(session('success'))
+            showVoteSuccessAlert();
+        @endif
 
-    // Tampilkan alert jika sudah pernah memilih
-    @if(session('already_voted'))
-        showAlreadyVotedAlert();
-    @endif
+        // Tampilkan alert jika ada error
+        @if(session('error'))
+            showErrorAlert();
+        @endif
+        
         // Fungsi untuk menampilkan notifikasi sukses setelah vote
         function showVoteSuccessAlert() {
             Swal.fire({
@@ -286,14 +302,14 @@
             });
         }
     
-        // Fungsi untuk menampilkan notifikasi jika sudah memilih
-        function showAlreadyVotedAlert() {
+        // Fungsi untuk menampilkan notifikasi error
+        function showErrorAlert() {
             Swal.fire({
-                title: "Anda Sudah Memilih!",
-                text: "Anda hanya bisa memberikan suara sekali saja.",
-                icon: "warning",
+                title: "Perhatian!",
+                text: "{{ session('error') }}",
+                icon: "error",
                 confirmButtonText: "OK",
-                confirmButtonColor: "#ffc107",
+                confirmButtonColor: "#dc3545",
                 showClass: {
                     popup: 'animate_animated animate_shakeX'
                 },

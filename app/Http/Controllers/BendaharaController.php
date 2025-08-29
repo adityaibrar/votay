@@ -1,5 +1,5 @@
 <?php
-    
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -41,49 +41,49 @@ class BendaharaController extends Controller
         return view('user.add', compact('roles'));
     }
 
-   public function store(Request $request)
-{
-    $request->validate([
-        'name' => [
-            'required', 
-            'min:3', 
-            'max:30', 
-            'regex:/^[a-zA-Z\s]+$/', 
-            function ($attribute, $value, $fail) {
-                if (User::where('name', $value)->exists()) {
-                    $fail($attribute . ' is registered.');
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => [
+                'required',
+                'min:3',
+                'max:30',
+                'regex:/^[a-zA-Z\s]+$/',
+                function ($attribute, $value, $fail) {
+                    if (User::where('name', $value)->exists()) {
+                        $fail($attribute . ' is registered.');
+                    }
                 }
+            ],
+            'email' => 'required|unique:users,email',
+            'password' => ['required', 'min:8', 'max:12'],
+            'kelas' => 'required',
+            'level' => 'required|array'
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $bendahara = new User();
+            $bendahara->name = $request->name;
+            $bendahara->email = $request->email;
+            $bendahara->password = Hash::make($request->password);
+            $bendahara->kelas = $request->kelas;
+            $bendahara->status_pemilihan = 'Belum Memilih';
+            $bendahara->save();
+
+            foreach ($request->level as $role) {
+                $bendahara->assignRole($role);
             }
-        ],
-        'email' => 'required|unique:users,email',
-        'password' => ['required', 'min:8', 'max:12'],
-        'kelas' => 'required',
-        'level' => 'required|array'
-    ]);
 
-    DB::beginTransaction();
-    try {
-        $bendahara = new User();
-        $bendahara->name = $request->name;
-        $bendahara->email = $request->email;
-        $bendahara->password = Hash::make($request->password);
-        $bendahara->kelas = $request->kelas;
-        $bendahara->status_pemilihan = 'Belum Memilih'; 
-        $bendahara->save();
+            DB::commit();
 
-        foreach ($request->level as $role) {
-            $bendahara->assignRole($role);
+            return redirect('/user')->with('success', 'User berhasil ditambahkan.');
+        } catch (\Throwable $th) {
+            DB::rollback();
+
+            return redirect('/user')->with('error', 'User gagal ditambahkan! ' . $th->getMessage());
         }
-
-        DB::commit();
-
-        return redirect('/user')->with('success', 'User berhasil ditambahkan.');
-    } catch (\Throwable $th) {
-        DB::rollback();
-
-        return redirect('/user')->with('error', 'User gagal ditambahkan! ' . $th->getMessage());
     }
-}
 
     public function edit($id)
     {
@@ -103,7 +103,7 @@ class BendaharaController extends Controller
             'password' => ['nullable', 'min:8', 'max:12'],
             'kelas' => 'required',
             // 'status_pemilihan' => 'required',
-            'roles' => 'required|array', 
+            'roles' => 'required|array',
             'roles.*' => 'exists:roles,name',
         ]);
 
@@ -203,7 +203,7 @@ class BendaharaController extends Controller
             // Validasi struktur file Excel
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path('DataUser/' . $namafile));
             $worksheet = $spreadsheet->getActiveSheet();
-            
+
             // Ambil header dari baris ke-2 (A2:D2)
             $headers = [];
             foreach ($worksheet->getRowIterator(2, 2) as $row) {
@@ -225,31 +225,31 @@ class BendaharaController extends Controller
 
             // Baca semua data dari baris ke-3 sampai baris terakhir
             $highestRow = $worksheet->getHighestRow();
-            
+
             // Proses data dalam batch untuk mengoptimalkan memori
             $batchSize = 100;
             $processedRows = 0;
             $duplicateData = [];
-            
-            for($row = 3; $row <= $highestRow; $row++) {
+
+            for ($row = 3; $row <= $highestRow; $row++) {
                 $nama = $worksheet->getCell('A' . $row)->getValue();
                 $email = $worksheet->getCell('B' . $row)->getValue();
                 $kelas = $worksheet->getCell('C' . $row)->getValue();
                 $role = $worksheet->getCell('D' . $row)->getValue();
 
                 // Skip jika baris kosong
-                if(empty($nama) && empty($email) && empty($kelas) && empty($role)) {
+                if (empty($nama) && empty($email) && empty($kelas) && empty($role)) {
                     continue;
                 }
 
                 // Validasi role
-                if(!in_array($role, ['1', '2'])) { // 1 untuk Guru, 2 untuk Siswa
+                if (!in_array($role, ['1', '2'])) { // 1 untuk Guru, 2 untuk Siswa
                     throw new \Exception('Role tidak valid pada baris ' . $row);
                 }
 
                 // Cek duplikasi data
                 $existingUser = User::where('email', $email)->first();
-                if($existingUser) {
+                if ($existingUser) {
                     $duplicateData[] = [
                         'row' => $row,
                         'email' => $email,
@@ -272,9 +272,9 @@ class BendaharaController extends Controller
                 $user->assignRole($roleName);
 
                 $processedRows++;
-                
+
                 // Commit setiap batch untuk menghemat memori
-                if($processedRows % $batchSize === 0) {
+                if ($processedRows % $batchSize === 0) {
                     DB::commit();
                     DB::beginTransaction();
                 }
@@ -283,20 +283,19 @@ class BendaharaController extends Controller
             DB::commit();
             @unlink(public_path('DataUser/' . $namafile));
 
-            if(!empty($duplicateData)) {
+            if (!empty($duplicateData)) {
                 $duplicateMessage = 'Beberapa data tidak diimpor karena sudah ada:';
-                foreach($duplicateData as $duplicate) {
+                foreach ($duplicateData as $duplicate) {
                     $duplicateMessage .= "\nBaris {$duplicate['row']}: {$duplicate['name']} ({$duplicate['email']})";
                 }
                 return redirect('/user')->with('error', $duplicateMessage);
             }
 
             return redirect('/user')->with('success', 'Data User Berhasil Diimport');
-
         } catch (\Exception $e) {
             DB::rollBack();
-            
-            if(file_exists(public_path('DataUser/' . $namafile))) {
+
+            if (file_exists(public_path('DataUser/' . $namafile))) {
                 @unlink(public_path('DataUser/' . $namafile));
             }
 
@@ -308,36 +307,28 @@ class BendaharaController extends Controller
 
     public function downloadTemplateExcel()
     {
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-        
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setTitle('Data User');
-        $sheet->setCellValue('A1', 'Import User');
-        $sheet->mergeCells('A1:D1');
-        $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A1')->getFont()->setBold(true);
-        $sheet->setCellValue('A2', 'Nama');
-        $sheet->setCellValue('B2', 'Email');
-        $sheet->setCellValue('C2', 'Kelas');
-        $sheet->setCellValue('D2', 'Role');
-        $sheet->setCellValue('F2', 'Keterangan')->getStyle('F2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('FFFF00');
-        $sheet->setCellValue('F3', '1. Pengisian data dimulai dari baris ke-3');
-        $sheet->setCellValue('F4', '2. Kolom D (Role) diisi dengan kode dari sheet Role');
-        
-        $sheet2 = $spreadsheet->createSheet();
-        $sheet2->setTitle('Role');
-        $sheet2->setCellValue('A1', 'Kode');
-        $sheet2->setCellValue('B1', 'Role');
-        $sheet2->setCellValue('A2', '1');
-        $sheet2->setCellValue('B2', 'Guru');
-        $sheet2->setCellValue('A3', '2');
-        $sheet2->setCellValue('B3', 'Siswa');
-        
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-        $filename = 'template-user.xlsx';
-        $filePath = storage_path('app/public/' . $filename);
-        $writer->save($filePath);
-        
-        return response()->download($filePath, $filename)->deleteFileAfterSend(true);
+        // Path ke template yang sudah ada (prioritas: production > advanced > basic)
+        $templatePaths = [
+            public_path('templates/template-import-user-production.xlsx'),
+            public_path('templates/template-import-user-advanced.xlsx'),
+            public_path('templates/template-import-user.xlsx')
+        ];
+
+        $templatePath = null;
+        foreach ($templatePaths as $path) {
+            if (file_exists($path)) {
+                $templatePath = $path;
+                break;
+            }
+        }
+
+        if (!$templatePath) {
+            return redirect()->back()->with('error', 'Template file tidak ditemukan. Silakan hubungi administrator.');
+        }
+
+        $filename = 'template-import-user.xlsx';
+
+        // Download file template langsung
+        return response()->download($templatePath, $filename);
     }
 }

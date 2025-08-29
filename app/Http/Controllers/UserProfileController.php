@@ -17,50 +17,48 @@ class UserProfileController extends Controller
         return view('profile.edit', compact('user', 'roles'));
     }
 
-public function update(Request $request)
-{
-    $user = auth()->user();
+    public function update(Request $request)
+    {
+        $user = auth()->user();
 
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'kelas' => 'required',
-        'password' => 'nullable|string|min:8',
-        'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'kelas' => 'required',
+            'password' => 'nullable|string|min:8',
+            'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
 
 
-    ]);
+        ]);
 
-    DB::beginTransaction();
-    try {
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->kelas = $request->kelas;
+        DB::beginTransaction();
+        try {
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->kelas = $request->kelas;
 
-        if ($request->hasFile('foto_profil')) {
-            if ($user->poto && Storage::disk('public')->exists($user->poto)) {
-                Storage::disk('public')->delete($user->poto);
+            if ($request->hasFile('foto_profil')) {
+                if ($user->poto && Storage::disk('public')->exists($user->poto)) {
+                    Storage::disk('public')->delete($user->poto);
+                }
+
+                $path = $request->file('foto_profil')->store('foto_profil', 'public');
+                $user->poto = $path;
             }
 
-            $path = $request->file('foto_profil')->store('foto_profil', 'public');
-            $user->poto = $path;
+            if ($request->filled('password')) {
+                $user->password = bcrypt($request->password);
+            }
+
+            $user->save();
+
+            DB::commit();
+
+            return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
+        } catch (\Throwable $th) {
+            DB::rollback();
+
+            return redirect()->route('profile.edit')->with('error', 'Profil gagal diperbarui: ' . $th->getMessage());
         }
-
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->password);
-        }
-
-        $user->save();
-
-        DB::commit();
-
-        return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
-    } catch (\Throwable $th) {
-        DB::rollback();
-
-        return redirect()->route('profile.edit')->with('error', 'Profil gagal diperbarui: ' . $th->getMessage());
     }
-}
-
-
 }
