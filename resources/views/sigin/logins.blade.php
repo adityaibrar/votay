@@ -121,9 +121,9 @@
                 <div class="my-auto">
 <img alt="Brand Title" class="-intro-x w-1/2 -mt-16 logo-large" src="{{ asset('dashboards/dist/images/logo_smasa.png') }}">
                     <div class="-intro-x text-white font-medium text-1xl leading-tight mt-10">
-                        Nothing is impossible. Anything can happen as long as we believe.
+                        Jl. Letnan Rantam, Tegalbatu Utara, Badean, Kec. Bondowoso,
                         <br>
-                        Sign in to your account.
+                        Kabupaten Bondowoso, Jawa Timur 68214
                     </div>
                 </div>
             </div>
