@@ -123,7 +123,7 @@
                     <div class="-intro-x text-white font-medium text-1xl leading-tight mt-10">
                         Jl. Letnan Rantam, Tegalbatu Utara, Badean, Kec. Bondowoso,
                         <br>
-                        Kabupaten Bondowoso, Jawa Timur 68214
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kabupaten Bondowoso, Jawa Timur 68214
                     </div>
                 </div>
             </div>
