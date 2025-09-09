@@ -175,7 +175,7 @@
                                 <div class="col-md-7">
                                     <div class="new-arrival-content">
                                         <h4>
-                                            <span class="badge badge-primary mr-2">No. {{ $calon->id }}</span>
+                                            <span class="badge badge-primary mr-2 text-white">No. {{ $calon->id }}</span>
                                             {{ $calon->nama_calon }}
                                         </h4>
                                         <p><i class="fas fa-calendar-alt mr-2"></i> <strong>Periode:</strong> {{ $calon->periode }}</p>
