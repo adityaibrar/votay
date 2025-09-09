@@ -24,7 +24,7 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
        .card-header {
-            background: linear-gradient(45deg, #EB8153 , #EB8153);
+            background: linear-gradient(45deg, #1569B3 , #1569B3);
             color: white;
             border-bottom: none;
             padding: 25px;
@@ -216,7 +216,7 @@
         <div class="container text-center">
             <span class="text-muted">
                 Hak Cipta © Dirancang &amp; Dikembangkan oleh 
-                <a href="https://www.instagram.com/_calldeo?igsh=MmR6Mm4yem54NXA5" target="_blank" class="text-primary">Deo Andreas</a> 2025
+                <a href="" target="_blank" class="text-primary">SMA 1 Bondowoso </a> 2025
             </span>
         </div>
     </footer>

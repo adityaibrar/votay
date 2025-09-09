@@ -28,7 +28,7 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
         .card-header {
-            background: linear-gradient(45deg, #EB8153 , #EB8153);
+            background: linear-gradient(45deg, #1569B3 , #1569B3);
             color: white;
             border-bottom: none;
             padding: 25px;
@@ -66,7 +66,7 @@
         }
         .btn-outline-success:hover {
             color: #fff;
-            background-color: #d74709;
+            background-color: #2AADB9;
             border-color: #f9f9fa;
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(9, 16, 87, 0.4);
@@ -130,7 +130,7 @@
             to {opacity: 1; transform: scale(1);}
         }
         .modal-header {
-            background: linear-gradient(45deg, #EB8153, #EB8153);
+            background: linear-gradient(45deg, #1569B3, #1569B3);
             color: white;
             border-bottom: none;
             padding: 20px 30px;
@@ -167,7 +167,7 @@
         }
         .btn-export:hover, .btn-export:active, .btn-export:focus {
             color: #fff;
-            background-color: #d74709;
+            background-color: #2AADB9;
             border-color: #f7f8f7;
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
@@ -182,7 +182,7 @@
         }
         .btn-import:hover, .btn-import:active, .btn-import:focus {
             color: #fff;
-            background-color: #d74709;
+            background-color: #2AADB9;
             border-color: #ffffff;
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
@@ -356,7 +356,7 @@
         <div class="container text-center">
             <span class="text-muted">
                 Hak Cipta © Dirancang &amp; Dikembangkan oleh 
-                <a href="https://www.instagram.com/_calldeo?igsh=MmR6Mm4yem54NXA5" target="_blank" class="text-primary">Deo Andreas</a> 2025
+                <a href="" target="_blank" class="text-primary">SMA 1 Bondowoso </a> 2025
             </span>
         </div>
     </footer>
@@ -400,7 +400,7 @@
                     text: "Data yang dihapus tidak dapat dikembalikan!",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#EB8153',
+                    confirmButtonColor: '#1569B3',
                     cancelButtonColor: '#6e7d88',
                     confirmButtonText: '<i class="fas fa-trash-alt"></i> Ya, Hapus!',
                     cancelButtonText: '<i class="fas fa-times"></i> Batal',

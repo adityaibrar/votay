@@ -17,7 +17,7 @@
             border: none;
         }
         .card-header {
-            background: linear-gradient(45deg, #EB8153, #EB8153);
+            background: linear-gradient(45deg, #1569B3, #1569B3);
             color: white;
             border-radius: 15px 15px 0 0;
             padding: 20px;
@@ -34,8 +34,8 @@
             transition: all 0.3s ease;
         }
         .btn-primary {
-            background-color: #EB8153;
-            border-color: #EB8153;
+            background-color: #1569B3;
+            border-color: #1569B3;
         }
         .btn-primary:hover {
             background-color: #FF9A85;

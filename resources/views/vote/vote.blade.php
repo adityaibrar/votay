@@ -50,7 +50,7 @@
         .new-arrival-content .text-content {
             font-style: italic;
             color: #888;
-            border-left: 3px solid #EB8153;
+            border-left: 3px solid #1569B3;
             padding-left: 15px;
             margin: 15px 0;
         }
@@ -60,7 +60,7 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
         .modal-header {
-            background: linear-gradient(45deg, #EB8153, #ff9b72);
+            background: linear-gradient(45deg, #1569B3, #ff9b72);
             color: white;
             border-radius: 20px 20px 0 0;
             padding: 20px 30px;
@@ -192,7 +192,7 @@
                 <div class="modal fade" id="myModal{{ $calon->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content" style="border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
-                            <div class="modal-header border-0" style="background: linear-gradient(45deg, #EB8153, #ff9b72); color: white; border-radius: 15px 15px 0 0;">
+                            <div class="modal-header border-0" style="background: linear-gradient(45deg, #1569B3, #ff9b72); color: white; border-radius: 15px 15px 0 0;">
                                 <h5 class="modal-title" id="myModalLabel" style="font-weight: 600;">{{ $calon->nama_calon }}</h5>
                                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -258,7 +258,7 @@
         <div class="container text-center">
             <span class="text-muted">
                 Hak Cipta © Dirancang &amp; Dikembangkan oleh 
-                <a href="https://www.instagram.com/_calldeo?igsh=MmR6Mm4yem54NXA5" target="_blank" class="text-primary">Deo Andreas</a> 2025
+                <a href="" target="_blank" class="text-primary">SMA 1 Bondowoso </a> 2025
             </span>
         </div>
     </footer>

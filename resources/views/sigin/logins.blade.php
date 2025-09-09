@@ -27,7 +27,7 @@
             transition: all 0.3s ease;
         }
         .password-container input:focus {
-            border-color: #EB8153;
+            border-color: #1569B3;
             box-shadow: 0 0 0 2px rgba(235, 129, 83, 0.2);
             outline: none;
         }
@@ -49,12 +49,12 @@
             transition: all 0.3s ease;
         }
         .login-input:focus {
-            border-color: #EB8153;
+            border-color: #1569B3;
             box-shadow: 0 0 0 2px rgba(235, 129, 83, 0.2);
             outline: none;
         }
         .login-button {
-            background-color: #EB8153;
+            background-color: #1569B3;
             color: white;
             border: none;
             border-radius: 8px;
@@ -67,7 +67,7 @@
             margin-top: 20px;
         }
         .login-button:hover {
-            background-color: #e06b3d;
+            background-color: #2AADB9;
             transform: translateY(-1px);
         }
         .form-container {
@@ -95,14 +95,14 @@
             font-size: 20px !important;
         }
         .swal2-confirm {
-            background-color: #EB8153 !important;
+            background-color: #1569B3 !important;
             color: white !important;
             border-radius: 8px !important;
             padding: 12px 25px !important;
             font-weight: 600 !important;
         }
         .swal2-confirm:hover {
-            background-color: #e06b3d !important;
+            background-color: #2AADB9 !important;
         }
     </style>
     <style>
@@ -119,7 +119,7 @@
             <!-- BEGIN: Login Info -->
             <div class="hidden xl:flex flex-col min-h-screen">
                 <div class="my-auto">
-<img alt="Brand Title" class="-intro-x w-1/2 -mt-16 logo-large" src="{{ asset('dashboards/dist/images/20.png') }}">
+<img alt="Brand Title" class="-intro-x w-1/2 -mt-16 logo-large" src="{{ asset('dashboards/dist/images/logo_smasa.png') }}">
                     <div class="-intro-x text-white font-medium text-1xl leading-tight mt-10">
                         Nothing is impossible. Anything can happen as long as we believe.
                         <br>

@@ -41,7 +41,7 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
         .card-header {
-            background: linear-gradient(45deg, #EB8153, #ff9b72);
+            background: linear-gradient(45deg, #1569B3, #2AADB9);
             color: white;
             border-radius: 20px 20px 0 0;
             padding: 25px;
@@ -56,11 +56,11 @@
             transition: all 0.3s ease;
         }
         .form-control:focus {
-            border-color: #EB8153;
+            border-color: #1569B3;
             box-shadow: 0 0 0 0.2rem rgba(235,129,83,0.25);
         }
         .btn-primary {
-            background: linear-gradient(45deg, #EB8153, #ff9b72);
+            background: linear-gradient(45deg, #1569B3, #2AADB9);
             border: none;
             border-radius: 10px;
             padding: 12px 30px;
@@ -76,12 +76,12 @@
             padding: 0;
         }
         .breadcrumb-item a {
-            color: #EB8153;
+            color: #1569B3;
             text-decoration: none;
             transition: 0.3s;
         }
         .breadcrumb-item a:hover {
-            color: #ff9b72;
+            color: #2AADB9;
         }
         label {
             font-weight: 500;
@@ -174,7 +174,7 @@
         <div class="container text-center">
             <span class="text-muted">
                 Hak Cipta © Dirancang &amp; Dikembangkan oleh 
-                <a href="https://www.instagram.com/_calldeo?igsh=MmR6Mm4yem54NXA5" target="_blank" class="text-primary">Deo Andreas</a> 2025
+                <a href="" target="_blank" class="text-primary">SMA 1 Bondowoso </a> 2025
             </span>
         </div>
     </footer>

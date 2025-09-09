@@ -24,7 +24,7 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
          .card-header {
-            background: linear-gradient(45deg, #EB8153 , #EB8153);
+            background: linear-gradient(45deg, #1569B3 , #1569B3);
             color: white;
             border-bottom: none;
             padding: 25px;
@@ -104,7 +104,7 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
         .modal-header {
-            background: linear-gradient(45deg, #EB8153, #ff9b72);
+            background: linear-gradient(45deg, #1569B3, #2AADB9);
             color: white;
             border-radius: 20px 20px 0 0;
             border: none;
@@ -119,7 +119,7 @@
             transition: all 0.3s ease;
         }
         .form-control:focus {
-            border-color: #EB8153;
+            border-color: #1569B3;
             box-shadow: 0 0 0 0.2rem rgba(235,129,83,0.25);
         }
         .alert {
@@ -238,7 +238,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Pilih Tanggal Voting</h5>
+                    <h5 class="modal-title text-white">Pilih Tanggal Voting</h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

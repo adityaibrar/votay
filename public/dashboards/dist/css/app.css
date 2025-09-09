@@ -10126,11 +10126,12 @@ html body{
         --tw-rotate: -4deg;
         transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
         border-radius: 100%;
-        background-color: rgb(var(--color-primary) / 0.2);
+        background-color: #2AADB9 ;
+        opacity: 0.5;
     }
 .dark .login:before{
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--color-darkmode-400) / var(--tw-bg-opacity));
+    background-color: #1569B3 ;
 }
 @media (max-width: calc(1280px - 1px)) {
     .login:before{
@@ -10151,11 +10152,12 @@ html body{
         transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
         border-radius: 100%;
         --tw-bg-opacity: 1;
-        background-color: rgb(var(--color-primary) / var(--tw-bg-opacity));
+        background-color: #1569B3 ;
+        
     }
 .dark .login:after{
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--color-darkmode-700) / var(--tw-bg-opacity));
+    background-color: #1569B3 ;
 }
 @media (max-width: calc(1280px - 1px)) {
     .login:after{

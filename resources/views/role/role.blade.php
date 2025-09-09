@@ -28,7 +28,7 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
         .card-header {
-            background: linear-gradient(45deg, #EB8153 , #EB8153);
+            background: linear-gradient(45deg, #1569B3 , #1569B3);
             color: white;
             border-bottom: none;
             padding: 25px;
@@ -130,7 +130,7 @@
             to {opacity: 1; transform: scale(1);}
         }
         .modal-header {
-            background: linear-gradient(45deg, #EB8153, #EB8153);
+            background: linear-gradient(45deg, #1569B3, #1569B3);
             color: white;
             border-bottom: none;
             padding: 20px 30px;

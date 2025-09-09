@@ -19,7 +19,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         .card-header {
-            background-color: #EB8153;
+            background-color: #1569B3;
             color: white;
             border-radius: 15px 15px 0 0;
         }
@@ -32,8 +32,8 @@
             font-weight: 600;
         }
         .btn-primary {
-            background-color: #EB8153;
-            border-color: #EB8153;
+            background-color: #1569B3;
+            border-color: #1569B3;
         }
         .btn-danger {
             background-color: #e74a3b;
