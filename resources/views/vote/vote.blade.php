@@ -60,7 +60,7 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
         .modal-header {
-            background: linear-gradient(45deg, #1569B3, #ff9b72);
+            background: linear-gradient(45deg, #1569B3, #2AADB9);
             color: white;
             border-radius: 20px 20px 0 0;
             padding: 20px 30px;
@@ -192,8 +192,8 @@
                 <div class="modal fade" id="myModal{{ $calon->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content" style="border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
-                            <div class="modal-header border-0" style="background: linear-gradient(45deg, #1569B3, #ff9b72); color: white; border-radius: 15px 15px 0 0;">
-                                <h5 class="modal-title" id="myModalLabel" style="font-weight: 600;">{{ $calon->nama_calon }}</h5>
+                            <div class="modal-header border-0" style="background: linear-gradient(45deg, #1569B3, #2AADB9); color: white; border-radius: 15px 15px 0 0;">
+                                <h5 class="modal-title text-white" id="myModalLabel" style="font-weight: 600;">{{ $calon->nama_calon }}</h5>
                                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
