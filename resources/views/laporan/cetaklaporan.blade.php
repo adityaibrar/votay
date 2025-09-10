@@ -80,17 +80,17 @@
 <body>
     <div class="content">
         <div class="header">
-            <img src="/foto_calon/print.png" alt="Header">
+            <img src="/foto_calon/print_smasa.png" alt="Header">
         </div>
 
         <div class="title">Berita Acara</div>
 
         <div class="text">
-            Pada hari ini tanggal {{ date('d F Y') }}, telah dilaksanakan pemilihan Ketua dan Wakil Ketua Organisasi Siswa Intra Sekolah (OSIS) di SMKN 1 TAPEN. Setelah proses pemungutan dan penghitungan suara, {{ $calonTerpilih->nama_calon }} terpilih sebagai Ketua OSIS periode 2024/2025 dengan jumlah {{ $calonTerpilih->jumlah_vote }} suara.
+            Pada hari ini tanggal {{ date('d F Y') }}, telah dilaksanakan pemilihan Ketua dan Wakil Ketua Organisasi Siswa Intra Sekolah (OSIS) di SMAN 1 Bondowoso. Setelah proses pemungutan dan penghitungan suara, {{ $calonTerpilih->nama_calon }} terpilih sebagai Ketua OSIS periode 2025/2026 dengan jumlah {{ $calonTerpilih->jumlah_vote }} suara.
         </div>
 
         <div class="text">
-            Dokumen ini menjadi catatan resmi hasil pemilihan Ketua dan Wakil Ketua OSIS. Demikianlah berita acara ini dibuat dengan sebenarnya untuk menjadi catatan resmi hasil pemilihan Ketua dan Wakil Ketua OSIS SMKN 1 TAPEN.
+            Dokumen ini menjadi catatan resmi hasil pemilihan Ketua dan Wakil Ketua OSIS. Demikianlah berita acara ini dibuat dengan sebenarnya untuk menjadi catatan resmi hasil pemilihan Ketua dan Wakil Ketua OSIS SMAN 1 Bondowoso.
         </div>
 
         <table>
