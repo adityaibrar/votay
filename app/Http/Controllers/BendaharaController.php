@@ -258,11 +258,12 @@ class BendaharaController extends Controller
                     continue;
                 }
 
+                $password = explode('@', $email)[0];
                 // Simpan ke database
                 $user = User::create([
                     'name' => $nama,
                     'email' => $email,
-                    'password' => Hash::make('password123'), // Default password
+                    'password' => Hash::make($password), // Gunakan password dari email
                     'kelas' => $kelas,
                     'status_pemilihan' => 'Belum Memilih'
                 ]);
