@@ -31,8 +31,6 @@ use App\Http\Controllers\DataVoteController;
 */
 
 
-route::get('/', [LoginController::class, 'landing'])->name('landing');
-
 route::get('/login', [LoginController::class, 'halamanlogin'])->name('login');
 route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
 
