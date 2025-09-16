@@ -83,7 +83,7 @@ class LoginController extends Controller
             return redirect('home');
         } else {
             // Set a session variable for the login error
-            return redirect('/login')->with('login_error', 'Email dan Password yang dimasukkan tidak valid');
+            return redirect('/')->with('login_error', 'Email dan Password yang dimasukkan tidak valid');
         }
     }
 
