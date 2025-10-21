@@ -11,11 +11,11 @@ return new class extends Migration
      *
      * @return void
      */
-   public function up()
+    public function up()
     {
         Schema::create('calon_osis', function (Blueprint $table) {
             $table->id(); // Primary key, auto increment
-            $table->string('nama_calon', 35); // Nama calon
+            $table->string('nama_calon', 255); // Nama calon
             $table->text('visimisi'); // Kolom visimisi
             $table->string('NIS', 255); // NIS
             $table->string('kelas', 25); // Kelas

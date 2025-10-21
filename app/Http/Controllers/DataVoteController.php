@@ -15,18 +15,13 @@ class DataVoteController extends Controller
 
     public function viewPolling()
     {
-        // Mengambil semua hasil voting
-        $hasilVotings = Polling::all();
-
-        // Reset jumlah_vote di tabel Osis sebelum diperbarui
-        Osis::query()->update(['jumlah_vote' => 0]);
-
-        // Mengupdate jumlah suara berdasarkan hasil voting
-        Osis::whereIn('id', $hasilVotings->pluck('id_calon'))
-            ->update(['jumlah_vote' => \DB::raw('jumlah_vote + 1')]);
-
-        // Ambil data calon Osis yang sudah diurutkan berdasarkan jumlah suara (ranking)
-        $calonOsis = Osis::orderBy('jumlah_vote', 'desc')->get();
+        // Menggunakan query ORM untuk menghitung jumlah suara secara real-time
+        // dengan left join antara tabel calon_osis dan hasil_voting (Polling)
+        $calonOsis = Osis::leftJoin('hasil_voting', 'calon_osis.id', '=', 'hasil_voting.id_calon')
+            ->select('calon_osis.*', DB::raw('COUNT(hasil_voting.id) as jumlah_vote'))
+            ->groupBy('calon_osis.id')
+            ->orderBy('jumlah_vote', 'desc')
+            ->get();
 
         // Ambil pengaturan waktu voting
         $settings = SettingWaktu::all();
@@ -40,11 +35,21 @@ class DataVoteController extends Controller
 
     public function cetaklaporan()
     {
+        // Menggunakan query ORM untuk menghitung jumlah suara secara real-time
         // Dapatkan calon dengan jumlah suara terbanyak
-        $calonTerpilih = Osis::orderBy('jumlah_vote', 'desc')->first();
-        $cosis = Osis::all();
+        $calonTerpilih = Osis::leftJoin('hasil_voting', 'calon_osis.id', '=', 'hasil_voting.id_calon')
+            ->select('calon_osis.*', DB::raw('COUNT(hasil_voting.id) as jumlah_vote'))
+            ->groupBy('calon_osis.id')
+            ->orderBy('jumlah_vote', 'desc')
+            ->first();
 
-        // return view('halaman.datapolling', ['calonOsis' => $calonOsis]);
+        // Dapatkan semua calon dengan jumlah suara real-time
+        $cosis = Osis::leftJoin('hasil_voting', 'calon_osis.id', '=', 'hasil_voting.id_calon')
+            ->select('calon_osis.*', DB::raw('COUNT(hasil_voting.id) as jumlah_vote'))
+            ->groupBy('calon_osis.id')
+            ->orderBy('jumlah_vote', 'desc')
+            ->get();
+
         $settings = SettingWaktu::all();
 
         $expired = false;
